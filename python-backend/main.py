@@ -1,26 +1,11 @@
-#from flask import Flask, request
-
-#app = Flask(__name__)
-
-
-#@app.route("/schmidt", methods=['POST', "GET"])
-#def login():
-#    print(request.method)
-#    return f"Received message {request}"
-
-
-#print("main.py executed successfully.")
-
-#if __name__ == "__main__":
-#    app.run(debug=True, port=12345)
-
 from flask import Flask, request
 from transformers import VisionEncoderDecoderModel, ViTImageProcessor, AutoTokenizer
-import torch, uuid, os
+import torch, uuid, os, requests
 from PIL import Image
 
 app = Flask(__name__)
 ROOT = r"./images"
+translator_ip = os.environ["TRANSLATOR_SERVER"]
 
 @app.route('/python-backend', methods=["POST"])
 def request_handler():
@@ -32,9 +17,9 @@ def request_handler():
             file.save(save_filename)
     if os.path.isfile(save_filename):
         text = predict_step([save_filename])[0]
-        return text
+        return translate_caption(text)
     else:
-        return "Shit\n"
+        return "Ocorreu um erro interno. Tente novamente mais tarde.\n"
 
 model = VisionEncoderDecoderModel.from_pretrained("nlpconnect/vit-gpt2-image-captioning")
 feature_extractor = ViTImageProcessor.from_pretrained("nlpconnect/vit-gpt2-image-captioning")
@@ -50,27 +35,26 @@ num_beams = 4
 gen_kwargs = {"max_length": max_length, "num_beams": num_beams}
 
 def predict_step(image_paths):
-  images = []
-  for image_path in image_paths:
-    i_image = Image.open(image_path)
-    if i_image.mode != "RGB":
-      i_image = i_image.convert(mode="RGB")
+    images = []
+    for image_path in image_paths:
+        i_image = Image.open(image_path)
+        if i_image.mode != "RGB":
+            i_image = i_image.convert(mode="RGB")
+        images.append(i_image)
 
-    images.append(i_image)
+    pixel_values = feature_extractor(images=images, return_tensors="pt").pixel_values
+    pixel_values = pixel_values.to(device)
+    
+    output_ids = model.generate(pixel_values, **gen_kwargs)
 
-  pixel_values = feature_extractor(images=images, return_tensors="pt").pixel_values
-  pixel_values = pixel_values.to(device)
+    preds = tokenizer.batch_decode(output_ids, skip_special_tokens=True)
+    preds = [pred.strip() for pred in preds]
+    return preds
 
-  output_ids = model.generate(pixel_values, **gen_kwargs)
-
-  preds = tokenizer.batch_decode(output_ids, skip_special_tokens=True)
-  preds = [pred.strip() for pred in preds]
-  return preds
-
-
-#predict_step(['football-match.jpg', 'cat-3.jpg']) # ['a woman in a hospital bed with a woman in a hospital bed']
-
-
+def translate_caption(caption):
+    r = requests.post(f"http://{translator_ip}/translator", data=bytes(caption, "utf-8")).text
+    print(r)
+    return r
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=1880)
+    app.run(host="0.0.0.0", port=1881)
