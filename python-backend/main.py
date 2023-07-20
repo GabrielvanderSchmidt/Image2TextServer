@@ -17,9 +17,9 @@ def request_handler():
             file.save(save_filename)
     if os.path.isfile(save_filename):
         text = predict_step([save_filename])[0]
-        return translate_caption(text)
     else:
-        return "Ocorreu um erro interno. Tente novamente mais tarde.\n"
+        text = "An internal error ocurred, please try again later."
+    return translate_caption(text)
 
 model = VisionEncoderDecoderModel.from_pretrained("nlpconnect/vit-gpt2-image-captioning")
 feature_extractor = ViTImageProcessor.from_pretrained("nlpconnect/vit-gpt2-image-captioning")

@@ -1,0 +1,445 @@
+[
+    {
+        "id": "4c2b929c140acb0d",
+        "type": "tab",
+        "label": "iEye Node-red Services",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5251853c33e2add3",
+        "type": "http in",
+        "z": "4c2b929c140acb0d",
+        "name": "putMapa",
+        "url": "/putMapa",
+        "method": "patch",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 100,
+        "y": 100,
+        "wires": [
+            [
+                "87ff32c3fd3483a1"
+            ]
+        ]
+    },
+    {
+        "id": "87ff32c3fd3483a1",
+        "type": "cloudantplus out",
+        "z": "4c2b929c140acb0d",
+        "name": "putMapa",
+        "cloudant": "24a4e6775b3a1bf2",
+        "database": "mapapcd",
+        "service": "_ext_",
+        "payonly": true,
+        "operation": "insert",
+        "x": 280,
+        "y": 100,
+        "wires": [
+            [
+                "2967f891a3a5a821",
+                "aaa4371637304c5d"
+            ]
+        ]
+    },
+    {
+        "id": "2967f891a3a5a821",
+        "type": "debug",
+        "z": "4c2b929c140acb0d",
+        "name": "debug 13",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 480,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "aaa4371637304c5d",
+        "type": "http response",
+        "z": "4c2b929c140acb0d",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 470,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "ac6d8805bc9ffa84",
+        "type": "http response",
+        "z": "4c2b929c140acb0d",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 490,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "2c5f543c6b786c1c",
+        "type": "debug",
+        "z": "4c2b929c140acb0d",
+        "name": "debug 14",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 500,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "4b9d9200139052a2",
+        "type": "cloudantplus in",
+        "z": "4c2b929c140acb0d",
+        "name": "readMapa",
+        "cloudant": "24a4e6775b3a1bf2",
+        "database": "mapapcd",
+        "service": "_ext_",
+        "search": "_all_",
+        "design": "",
+        "index": "",
+        "x": 300,
+        "y": 260,
+        "wires": [
+            [
+                "ac6d8805bc9ffa84"
+            ]
+        ]
+    },
+    {
+        "id": "ced5642b771b5f2d",
+        "type": "http in",
+        "z": "4c2b929c140acb0d",
+        "name": "readMapa",
+        "url": "/readMapa",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 100,
+        "y": 260,
+        "wires": [
+            [
+                "4b9d9200139052a2"
+            ]
+        ]
+    },
+    {
+        "id": "64cc1b5a8a6f6442",
+        "type": "http in",
+        "z": "4c2b929c140acb0d",
+        "name": "translator",
+        "url": "/translator",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 100,
+        "y": 440,
+        "wires": [
+            [
+                "c0f042aaf18a18b4"
+            ]
+        ]
+    },
+    {
+        "id": "de63065605afabf3",
+        "type": "cloudantplus out",
+        "z": "4c2b929c140acb0d",
+        "name": "saveCaptions",
+        "cloudant": "24a4e6775b3a1bf2",
+        "database": "captionsdb",
+        "service": "_ext_",
+        "payonly": true,
+        "operation": "insert",
+        "x": 560,
+        "y": 520,
+        "wires": [
+            [
+                "463039a3a014f676",
+                "2460ebb146ea4eae"
+            ]
+        ]
+    },
+    {
+        "id": "2460ebb146ea4eae",
+        "type": "debug",
+        "z": "4c2b929c140acb0d",
+        "name": "debug 15",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "463039a3a014f676",
+        "type": "http response",
+        "z": "4c2b929c140acb0d",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 750,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "c46024c4a06a7a95",
+        "type": "comment",
+        "z": "4c2b929c140acb0d",
+        "name": "Map functionalities",
+        "info": "",
+        "x": 130,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "60c22c0b9ce67296",
+        "type": "comment",
+        "z": "4c2b929c140acb0d",
+        "name": "Image caption translations",
+        "info": "",
+        "x": 150,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "0249db4e2698cf17",
+        "type": "function",
+        "z": "4c2b929c140acb0d",
+        "name": "format json",
+        "func": "msg.payload = '{\"texto\" : \"' + msg.payload + '\"}';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 440,
+        "wires": [
+            [
+                "a6f41d4585327ded"
+            ]
+        ]
+    },
+    {
+        "id": "c0f042aaf18a18b4",
+        "type": "watson-translator",
+        "z": "4c2b929c140acb0d",
+        "name": "translator",
+        "action": "translate",
+        "basemodel": "ar-en",
+        "domain": "general",
+        "srclang": "en",
+        "destlang": "pt",
+        "apikey": "ZHzX_LpjWtj_fgX57bxbQR4xZZDdFKip3WaauObGpUaK",
+        "custom": "",
+        "domainhidden": "general",
+        "srclanghidden": "en",
+        "destlanghidden": "pt",
+        "basemodelhidden": "ar-en",
+        "customhidden": "",
+        "filetype": "forcedglossary",
+        "trainid": "",
+        "lgparams2": true,
+        "service-endpoint": "https://api.us-south.language-translator.watson.cloud.ibm.com/instances/4b8daa6e-d755-4d7a-872a-970c66341189",
+        "x": 300,
+        "y": 440,
+        "wires": [
+            [
+                "0249db4e2698cf17"
+            ]
+        ]
+    },
+    {
+        "id": "77c432fc529c65e0",
+        "type": "inject",
+        "z": "4c2b929c140acb0d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Testing image captioning server.",
+        "payloadType": "str",
+        "x": 90,
+        "y": 480,
+        "wires": [
+            [
+                "c0f042aaf18a18b4"
+            ]
+        ]
+    },
+    {
+        "id": "a6f41d4585327ded",
+        "type": "json",
+        "z": "4c2b929c140acb0d",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 650,
+        "y": 440,
+        "wires": [
+            [
+                "de63065605afabf3"
+            ]
+        ]
+    },
+    {
+        "id": "96ed5481d896a961",
+        "type": "http response",
+        "z": "4c2b929c140acb0d",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 490,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "1a4d5a28e07e882c",
+        "type": "debug",
+        "z": "4c2b929c140acb0d",
+        "name": "debug 16",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 500,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "0e8b08082eabfca0",
+        "type": "cloudantplus in",
+        "z": "4c2b929c140acb0d",
+        "name": "readCaptions",
+        "cloudant": "24a4e6775b3a1bf2",
+        "database": "captionsdb",
+        "service": "_ext_",
+        "search": "_all_",
+        "design": "",
+        "index": "",
+        "x": 300,
+        "y": 620,
+        "wires": [
+            [
+                "96ed5481d896a961",
+                "1a4d5a28e07e882c"
+            ]
+        ]
+    },
+    {
+        "id": "2a1334f5950d12c5",
+        "type": "http in",
+        "z": "4c2b929c140acb0d",
+        "name": "readCaptions",
+        "url": "/readCaptions",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 110,
+        "y": 620,
+        "wires": [
+            [
+                "0e8b08082eabfca0"
+            ]
+        ]
+    },
+    {
+        "id": "eba00071a2f63427",
+        "type": "http response",
+        "z": "4c2b929c140acb0d",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 490,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "bd378218b1ad331c",
+        "type": "debug",
+        "z": "4c2b929c140acb0d",
+        "name": "debug 17",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 500,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "083f1ac271ebce52",
+        "type": "http in",
+        "z": "4c2b929c140acb0d",
+        "name": "delCaptions",
+        "url": "/delCaptions",
+        "method": "delete",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 110,
+        "y": 720,
+        "wires": [
+            [
+                "29cad6284893786c"
+            ]
+        ]
+    },
+    {
+        "id": "29cad6284893786c",
+        "type": "cloudantplus out",
+        "z": "4c2b929c140acb0d",
+        "name": "delCaptions",
+        "cloudant": "24a4e6775b3a1bf2",
+        "database": "captionsdb",
+        "service": "_ext_",
+        "payonly": true,
+        "operation": "delete",
+        "x": 290,
+        "y": 720,
+        "wires": [
+            [
+                "bd378218b1ad331c",
+                "eba00071a2f63427"
+            ]
+        ]
+    },
+    {
+        "id": "24a4e6775b3a1bf2",
+        "type": "cloudantplus",
+        "host": "https://apikey-v2-1oyyl44w0ka2aw9z3fvb53wag6o79wi8boxf0xsbnpr:6c078caec78a17bbd953a16fff300224@bbd3c0ee-d0c8-455b-bbd3-8d6d996c2c0a-bluemix.cloudantnosqldb.appdomain.cloud",
+        "name": "luisfbs",
+        "useapikey": true
+    }
+]
